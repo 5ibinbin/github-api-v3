@@ -1,6 +1,6 @@
-## GitHub Api V3翻译
+## GitHub API V3翻译
 
-### 目标
+### [地址](https://developer.github.com/v3/)
 
 ### 目录
 
