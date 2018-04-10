@@ -26,3 +26,19 @@
 
 	Accept: application/vnd.github.v3+json
 
+更多有关`GitHub's GraphQL API v4`的相关信息，请移步到[这里](https://developer.github.com/v4/)
+
+#### 结构
+
+所有的`API`的访问都是通过`HTTPS`访问，并通过`https://api.github.com`进行请求，所有请求或者返回的数据都是`JSON`格式的数据。
+
+![schema]()
+
+空白区域用`null`代替而不是省略
+
+所有的时间戳会以`ISO 8601`格式返回:
+
+	YYYY-MM-DDTHH:MM:SSZ
+
+更多有关时间戳的时区问题，请移步`timezones`模块
+
