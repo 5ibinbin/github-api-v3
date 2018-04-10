@@ -32,7 +32,7 @@
 
 所有的`API`的访问都是通过`HTTPS`访问，并通过`https://api.github.com`进行请求，所有请求或者返回的数据都是`JSON`格式的数据。
 
-![schema]()
+![schema](https://github.com/5ibinbin/github-api-v3/blob/master/img/current1.png)
 
 空白区域用`null`代替而不是省略
 
