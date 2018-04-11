@@ -42,7 +42,7 @@
 
 更多有关时间戳的时区问题，请移步`timezones`模块
 
-##### 汇总显示
+###### 汇总显示
 
 当我们想获取资源列表时，返回数据会包含某个资源的一部分属性。这就是资源的摘要显示。(某些属性对应当前列表API来说是很费时的。出于性能方面的考虑，列表接口要排除这些属性的显示。如果要获得这些属性，可以通过详情`API`来获取)。
 
@@ -50,14 +50,44 @@
 
 	GET /orgs/octokit/repos
 	
-##### 详情显示
+###### 详情显示
 
-一般情况下，当你想获取单个的资源时，我们会返回给你当前资源的所有属性。这就是资源的详情显示。（注意：在资源没有获得授权时，我们可能只会显示一部分数据）。
+一般情况下，当你想获取单个的资源时，我们会返回给你当前资源的所有属性。这就是资源的详情展示。（注意：在资源没有获得授权时，我们可能只会显示一部分数据）。
 
 **示例**：下面我们以获取[octokit/octokit.rb](https://github.com/octokit/octokit.rb)的具体信息为例，来告诉大家如何获取单个仓库的全部信息显示：
 
 	GET /repos/octokit/octokit.rb
 	
-我们为每个`API`方法都提供了一个响应数据，响应数据展示了该方法返回的所有属性。
+我们为每个`API`方法都提供了一个返回数据，返回数据展示了该方法返回的所有属性。
+
+#### 认证
+
+有三种方式可以通过`GitHub API v3`进行身份验证。某些情况下，请求需要认证的接口会返回`404 Not Found`，而不是`403 Forbidden`。这是问了避免无意泄露私有仓库的信息给未被认证的用户。
+
+###### 基础认证
+
+	curl -u "username" https://api.github.com
+	
+###### OAuth2 token(请求头部)
+
+	curl -H "Authorization: token OAUTH-TOKEN" https://api.github.com
+	
+###### OAuth2 token(请求参数中)
+
+	curl https://api.github.com/?access_token=OAUTH-TOKEN
+	
+更多`OAuth2 `请移步[这里](https://developer.github.com/apps/building-oauth-apps/)，注意：我们可以以编程的方式获取`OAuth2 Token`，而不是网站的应用程序。
+
+###### OAuth2 key/secret
+
+	curl 'https://api.github.com/users/whatever?client_id=xxxx&client_secret=yyyy'
+	
+这种应用场景应该是服务器到服务器的通讯，不要泄露你的`OAuth2`给你的客户端使用者。
+
+有关更多没有认证的限制，请移步[这里](https://developer.github.com/v3/#increasing-the-unauthenticated-rate-limit-for-oauth-applications)
+
+###### 登录失败情形
+	
+	
 
 
