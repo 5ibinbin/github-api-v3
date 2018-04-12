@@ -88,6 +88,16 @@
 
 ###### 登录失败情形
 	
-	
+无效的身份认证将会返回`401 Unauthorized`
 
+![Unauthorized](unauthenticated)
 
+在短时间内检测到多次无效的身份认证之后，`API` 将会暂时的拒绝该用户的所有认证（包括有效的认证）并且会返回`403 Forbidden`错误
+
+#### 参数
+
+很多`API`方法才去可选参数。以`GET`请求为例，任何没有在路径中分割的参数都可以作为`HTTP` 查询字符串参数
+
+	curl -i "https://api.github.com/repos/vmg/redcarpet/issues?state=closed"
+
+对于 `POST`，`patch`，`PUT`，和`DELETE`请求来说，参数不能出现在`URL`中而且还要以JSON的形式并且`Content-Type`为`application/json`
