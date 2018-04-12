@@ -90,9 +90,11 @@
 	
 无效的身份认证将会返回`401 Unauthorized`
 
-![Unauthorized](unauthenticated)
+![Unauthorized](https://github.com/5ibinbin/github-api-v3/blob/master/img/unAuthorized.png)
 
 在短时间内检测到多次无效的身份认证之后，`API` 将会暂时的拒绝该用户的所有认证（包括有效的认证）并且会返回`403 Forbidden`错误
+
+![Forbidden](https://github.com/5ibinbin/github-api-v3/blob/master/img/Forbidden.png)
 
 #### 参数
 
@@ -100,4 +102,7 @@
 
 	curl -i "https://api.github.com/repos/vmg/redcarpet/issues?state=closed"
 
+在这个例子中，`vmg`和`redcarpet`是用来提供路径中对应的`:owner`和`:repo`参数而`:state`是在查询字符串中传递
+
 对于 `POST`，`patch`，`PUT`，和`DELETE`请求来说，参数不能出现在`URL`中而且还要以JSON的形式并且`Content-Type`为`application/json`
+
