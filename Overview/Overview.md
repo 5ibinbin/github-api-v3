@@ -128,3 +128,78 @@
 	https://api.github.com/user  
 
 你将会获得一个包含`node_id`的认证用户的响应数据
+
+```
+Status: 200 OK
+{
+  "login": "octocat",
+  "id": 1,
+  "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+  "gravatar_id": "",
+  "url": "https://api.github.com/users/octocat",
+  "html_url": "https://github.com/octocat",
+  "followers_url": "https://api.github.com/users/octocat/followers",
+  "following_url": "https://api.github.com/users/octocat/following{/other_user}",
+  "gists_url": "https://api.github.com/users/octocat/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/octocat/subscriptions",
+  "organizations_url": "https://api.github.com/users/octocat/orgs",
+  "repos_url": "https://api.github.com/users/octocat/repos",
+  "events_url": "https://api.github.com/users/octocat/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/octocat/received_events",
+  "type": "User",
+  "site_admin": false,
+  "name": "monalisa octocat",
+  "company": "GitHub",
+  "blog": "https://github.com/blog",
+  "location": "San Francisco",
+  "email": "octocat@github.com",
+  "hireable": false,
+  "bio": "There once was...",
+  "public_repos": 2,
+  "public_gists": 1,
+  "followers": 20,
+  "following": 0,
+  "created_at": "2008-01-14T04:33:35Z",
+  "updated_at": "2008-01-14T04:33:35Z",
+  "total_private_repos": 100,
+  "owned_private_repos": 100,
+  "private_gists": 81,
+  "disk_usage": 10000,
+  "collaborators": 8,
+  "two_factor_authentication": true,
+  "plan": {
+    "name": "Medium",
+    "space": 400,
+    "private_repos": 20,
+    "collaborators": 0
+  },
+  "node_id": "MDQ6VXNlcjU4MzIzMQ=="
+}
+```
+
+你可以使用`node_id `的值(本例中的`MDQ6VXNlcjU4MzIzMQ==`)来为`GraphQL API v4`提供一个具体的[node](https://developer.github.com/v4/guides/intro-to-graphql/#node)。只需要提供`node ID`，你就可以访问底层类型的数据。
+
+你也许会发现使用[inline fragments](http://graphql.org/learn/queries/#inline-fragments)这种方式更加简单，例如：
+
+[点此查看运行效果](https://developer.github.com/v4/explorer/?variables=%7B%7D&query=query%20%7B%0A%20%20node%28id%3A%22MDQ6VXNlcjU4MzIzMQ%3D%3D%22%29%20%7B%0A%20%20%20...%20on%20User%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20name%0A%20%20%20%20%20%20login%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D)
+
+```
+query {
+  node(id:"MDQ6VXNlcjU4MzIzMQ==") {
+   ... on User {
+      id
+      name
+      login
+    }
+  }
+}
+```
+
+想查看在`REST API v3 `资源列表下`API`返回的数据中包含`node ID`，请移步到[这里](https://developer.github.com/changes/2017-12-19-graphql-node-id/)
+
+当我们构建使用`REST API v3` 或`GraphQL API v4` 的工具和集合是，最好去持久化这个 `ID`的值，以便我们可以更方便的从其他的API版本获取参考值。要查看更多的信息，请查看[Migrating from REST to GraphQL](https://developer.github.com/v4/guides/migrating-from-rest/)。
+
+#### 客户端错误
+
+
