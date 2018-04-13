@@ -106,3 +106,25 @@
 
 对于 `POST`，`patch`，`PUT`，和`DELETE`请求来说，参数不能出现在`URL`中而且还要以JSON的形式并且`Content-Type`为`application/json`
 
+	curl -i -u username -d '{"scopes":["public_repo"]}' https://api.github.com/authorizations
+
+#### Root endpoint(实在不知道怎么翻译)
+
+你可以发送一个`GET`请求来查看`REST API V3`支持的根节点的返回类型：
+
+	curl https://api.github.com
+	
+#### GraphQL 全局ID
+
+当准备迁移到[GraphQL API v4](https://developer.github.com/v4/)，你可以使用`jean-grey`来暴露使用`REST API V3`来获取的很多资源的`GraphQL ID `
+
+	application/vnd.github.jean-grey-preview+json
+	
+响应的数据将会包含一个`node_id`字段
+
+例如，如果你请求一个[用户认证接口](https://developer.github.com/v3/users/#get-the-authenticated-user)
+
+	curl -i -u username:token
+	https://api.github.com/user  
+
+你将会获得一个包含`node_id`的认证用户的响应数据
