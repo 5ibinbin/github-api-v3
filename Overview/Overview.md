@@ -202,4 +202,49 @@ query {
 
 #### 客户端错误
 
+在接收请求体的`API`的调用中，可能会有三种类型的客户端错误：
 
+######1. 发送无效的`JSON`会返回`400 Bad Request`错误
+
+```
+HTTP/1.1 400 Bad Request
+Content-Length: 35
+	
+{"message":"Problems parsing JSON"}
+```
+	
+######2. 发送错误的`JSON`类型会返回`400 Bad Request`错误
+
+```
+HTTP/1.1 400 Bad Request
+Content-Length: 40
+
+{"message":"Body should be a JSON object"}
+```
+
+######3. 发送无效的字段会返回`422 Unprocessable Entity`
+
+```
+HTTP/1.1 422 Unprocessable Entity
+Content-Length: 149
+
+{
+  "message": "Validation Failed",
+  "errors": [
+    {
+      "resource": "Issue",
+      "field": "title",
+      "code": "missing_field"
+    }
+  ]
+}
+```
+
+所有的错误对象都有资源和字段属性以便以你能够发现问题所在。而且还会有错误码来帮助你知晓是什么错误。下面是可能的验证错误码：
+
+- `missing：This means a resource does not exist.`
+- `missing_field : This means a required field on a resource has not been set.`
+- `invalid ：This means the formatting of a field is invalid. The documentation for that resource should be able to give you more specific information.`
+- `already_exists ：This means another resource has the same value as this field. This can happen in resources that must have some unique key (such as Label names).`
+
+响应数据有时也会返回自定义的错误码（当`code`是自定义的时候）。错误信息通常会有一个描述错误的消息字段，而且大多数错误都会包含一个帮你解决错误的指定的`documentation_url`。
