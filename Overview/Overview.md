@@ -248,3 +248,27 @@ Content-Length: 149
 - `already_exists ：This means another resource has the same value as this field. This can happen in resources that must have some unique key (such as Label names).`
 
 响应数据有时也会返回自定义的错误码（当`code`是自定义的时候）。错误信息通常会有一个描述错误的消息字段，而且大多数错误都会包含一个帮你解决错误的指定的`documentation_url`。
+
+#### `HTTP` 重定向
+
+`API V3`会在合适的地方使用重定向。客户端应该保证任何请求都应该返回一个重定向。客户端收到`HTTP`重定向不代表这是一个错误而且应该遵循该重定向。重定向响应会在头部返回一个包含要请求资源的`URI`的`location`字段以便我们再次请求。
+
+##### 状态码
+
+1. `301`：Permanent redirection. The URI you used to make the request has been superseded by the one specified in the Location header field. This and all future requests to this resource should be directed to the new URI.
+2. `302`或`307`：Temporary redirection. The request should be repeated verbatim to the URI specified in the Location header field but clients should continue to use the original URI for future requests.
+
+其他重定向状态码可以根据`HTTP1.1`规范使用
+
+#### HTTP请求方式
+
+在可能的情况下，`API V3`尽量使用合适的`HTTP`请求方式获取资源
+
+- `Head`: 可以针对任何资源发布以获取`HTTP`头信息
+- `GET`: 用于获取资源
+- `POST`: 用于创建资源
+- `PATCH`: 用于使用部分JSON数据更新资源。例如：一个发布的资源具有`title`和`body`属性，`PATCH`请求接收一个或多个属性来更新资源。`PATCH`是一种相对新的和不常见的请求方式，我们也可以使用`POST`来代替。
+- `PUT`: 用于代替或收集资源。对于没有`body`属性的`PUT`请求，务必设置头部信息中的`Content-Length`属性归零
+- `DELETE`: 用于删除资源
+
+#### 超媒体
