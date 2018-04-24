@@ -272,3 +272,19 @@ Content-Length: 149
 - `DELETE`: 用于删除资源
 
 #### 超媒体
+
+所有的资源可能会有一个或多个链接导其他资源的`*_url`，这是为了提供明确的`URL`，以便`API`客户端不需要自己构建`URL`。强烈推荐`API`客户端使用这些。这样做将会使开发人员更容易升级`API`。预计所有的`URL`都是正确的[RFC 6570](http://tools.ietf.org/html/rfc6570) `URI` 模板。
+
+你可以使用类似`uri_template` `gem`来扩展这些模板：
+
+```
+>> tmpl = URITemplate.new('/notifications{?since,all,participating}')
+>> tmpl.expand
+=> "/notifications"
+
+>> tmpl.expand :all => 1
+=> "/notifications?all=1"
+
+>> tmpl.expand :all => 1, :participating => 1
+=> "/notifications?all=1&participating=1"
+```
