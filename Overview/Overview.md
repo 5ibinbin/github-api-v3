@@ -288,3 +288,16 @@ Content-Length: 149
 >> tmpl.expand :all => 1, :participating => 1
 => "/notifications?all=1&participating=1"
 ```
+
+#### 分页
+
+每个请求默认的会返回30条数据，你可以通过`?page`参数来指定页数。如果想获取更多的资源，你可以通过`?per_page`参数来指定每页有100条数据。注意由于技术原因并非所有端点都支持`?per_page`参数，具体请参考[这里](https://developer.github.com/v3/activity/events/)
+
+	curl 'https://api.github.com/user/repos?page=2&per_page=100'
+	
+注意：页面编号是基于1的，并且省略`?page`参数来获取第一个页面数据。
+
+想获取更多分页的信息，请查看[Traversing with Pagination](https://developer.github.com/v3/guides/traversing-with-pagination/)指南。
+
+#### 链接标题
+
